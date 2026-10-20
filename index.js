@@ -53,7 +53,11 @@ app.put('/biodata/:id', (req, res) => {
         [nama, nim, kelas, id]
     )
     .then(result => {
-        // Akan ditambahkan pengecekan di commit selanjutnya
+        if (result.rowCount === 0) {
+            return res.status(404).json({
+                message: "Data tidak ditemukan"
+            });
+        }
     })
     .catch(err => {
         console.error(err);
