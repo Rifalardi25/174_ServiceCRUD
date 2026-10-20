@@ -58,6 +58,11 @@ app.put('/biodata/:id', (req, res) => {
                 message: "Data tidak ditemukan"
             });
         }
+
+        res.json({
+            message: "Data berhasil diupdate",
+            data: result.rows[0]
+        });
     })
     .catch(err => {
         console.error(err);
