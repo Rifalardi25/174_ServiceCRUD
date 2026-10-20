@@ -43,6 +43,24 @@ app.post('/biodata', (req, res) => {
     .catch(err => console.error(err));
 });
 
+// PUT (Update Data)
+app.put('/biodata/:id', (req, res) => {
+    const {id} = req.params;
+    const {nama, nim, kelas} = req.body;
+
+    pool.query(
+        'UPDATE biodata SET nama = $1, nim = $2, kelas = $3 WHERE id = $4 RETURNING nama, nim, kelas, id',
+        [nama, nim, kelas, id]
+    )
+    .then(result => {
+        // Akan ditambahkan pengecekan di commit selanjutnya
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    });
+});
+
 app.listen(port, () => {
     console.log(`App running on port ${port}.`);
 });
